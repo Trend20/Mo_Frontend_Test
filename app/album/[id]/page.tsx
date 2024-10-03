@@ -1,16 +1,19 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import {AlbumDetails, AlbumDetailsApiResponse, AlbumPageProps, Track} from "@/types";
 
-async function getAlbumDetails(id:number) {
+
+
+async function getAlbumDetails(id:number):Promise<AlbumDetailsApiResponse> {
     const res = await fetch(`https://itunes.apple.com/lookup?id=${id}&entity=song`)
     if (!res.ok) throw new Error('Failed to fetch data')
     return res.json()
 }
 
-export default async function AlbumPage({ params }:any) {
+export default async function AlbumPage({ params }:AlbumPageProps) {
     const data = await getAlbumDetails(params.id)
-    const album = data.results[0]
-    const tracks = data.results.slice(1)
+    const album = data.results[0] as AlbumDetails
+    const tracks = data.results.slice(1) as Track[]
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -35,7 +38,7 @@ export default async function AlbumPage({ params }:any) {
                     </a>
                     <h3 className="text-2xl font-semibold mt-8 mb-4">Tracks</h3>
                     <ol className="list-decimal list-inside">
-                        {tracks.map((track: any) => (
+                        {tracks.map((track:Track) => (
                             <li key={track.trackId} className="mb-2">{track.trackName}</li>
                         ))}
                     </ol>

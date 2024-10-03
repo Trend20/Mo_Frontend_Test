@@ -1,23 +1,24 @@
 import SearchBar from "@/components/Search";
 import AlbumList from "@/components/AlbumList";
 import Pagination from "@/components/Pagination";
+import {Album, HomeProps, ItunesApiResponse} from "@/types";
 
 // fetch albums
-async function getTopAlbums() {
+async function getTopAlbums(): Promise<ItunesApiResponse> {
     const res = await fetch('https://itunes.apple.com/us/rss/topalbums/limit=100/json')
     if (!res.ok) throw new Error('Failed to fetch data')
     return res.json()
 }
 
-export default async function Music({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+export default async function Home({ searchParams }:HomeProps) {
     const data = await getTopAlbums()
-    const allAlbums = data.feed.entry
+    const allAlbums:Album[] = data.feed.entry
 
     const search = typeof searchParams.search === 'string' ? searchParams.search : ''
     const page = typeof searchParams.page === 'string' ? parseInt(searchParams.page) : 1
     const pageSize = 12
 
-    const filteredAlbums = allAlbums.filter((album: any) =>
+    const filteredAlbums = allAlbums.filter((album) =>
         album['im:name'].label.toLowerCase().includes(search.toLowerCase()) ||
         album['im:artist'].label.toLowerCase().includes(search.toLowerCase())
     )

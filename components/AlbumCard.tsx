@@ -1,9 +1,5 @@
 import Image from 'next/image'
-
-interface AlbumCardProps {
-    album: any;
-    rank: number
-}
+import {AlbumCardProps} from "@/types";
 
 export default function AlbumCard({ album, rank }: AlbumCardProps) {
     return (
