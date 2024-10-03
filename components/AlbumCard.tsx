@@ -1,6 +1,11 @@
 import Image from 'next/image'
 
-export default function AlbumCard({ album, rank }) {
+interface AlbumCardProps {
+    album: any;
+    rank: number
+}
+
+export default function AlbumCard({ album, rank }: AlbumCardProps) {
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
             <div className="relative">

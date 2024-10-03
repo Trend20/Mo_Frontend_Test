@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import {FormEvent, useState} from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function SearchBar({ initialSearch = '' }) {
-    const [searchTerm, setSearchTerm] = useState(initialSearch)
+    const [searchTerm, setSearchTerm] = useState<string>(initialSearch)
     const router = useRouter()
 
-    const handleSearch = (e) => {
+    const handleSearch = (e:FormEvent) => {
         e.preventDefault()
         router.push(`/?search=${encodeURIComponent(searchTerm)}`)
     }

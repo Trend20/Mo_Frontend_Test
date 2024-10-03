@@ -1,6 +1,11 @@
 import Link from 'next/link'
 
-export default function Pagination({ currentPage, totalPages, search }) {
+interface PaginationProps {
+    currentPage: number;
+    totalPages:number;
+    search: string;
+}
+export default function Pagination({ currentPage, totalPages, search }: PaginationProps) {
     const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
 
     return (
